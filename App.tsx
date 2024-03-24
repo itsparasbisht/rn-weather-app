@@ -1,32 +1,14 @@
-import React, { useState, useEffect } from "react";
-import { Platform, Text, View, StyleSheet } from "react-native";
-import { useLocation } from "./hooks/useLocation";
+import { PaperProvider } from "react-native-paper";
+import { AppRegistry } from "react-native";
+import { expo } from "./app.json";
+import Home from "./screens/Home";
 
 export default function App() {
-  const { location, errorMsg } = useLocation();
-
   return (
-    <View style={styles.container}>
-      {errorMsg ? (
-        <Text style={styles.paragraph}>{errorMsg}</Text>
-      ) : (
-        <Text style={styles.paragraph}>
-          {JSON.stringify(location, undefined, 2)}
-        </Text>
-      )}
-    </View>
+    <PaperProvider>
+      <Home />
+    </PaperProvider>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    padding: 20,
-  },
-  paragraph: {
-    fontSize: 18,
-    textAlign: "center",
-  },
-});
+AppRegistry.registerComponent(expo.name, () => App);
