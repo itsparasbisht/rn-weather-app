@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text } from "react-native";
 import React from "react";
 import { ActivityIndicator, MD2Colors } from "react-native-paper";
 import { useLocation } from "../hooks/useLocation";
@@ -8,35 +8,23 @@ export default function Home() {
 
   if (location === undefined && errorMsg === "") {
     return (
-      <View style={styles.container}>
+      <View className="flex-1 items-center justify-center bg-white">
         <ActivityIndicator animating={true} color={MD2Colors.red800} />
       </View>
     );
   } else if (errorMsg) {
     return (
-      <View style={styles.container}>
-        <Text style={styles.paragraph}>{errorMsg}</Text>
+      <View>
+        <Text>{errorMsg}</Text>
       </View>
     );
   }
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.paragraph}>
+    <View className="flex-1 items-center justify-center bg-white">
+      <Text className="text-red-600 text-xl">
         {JSON.stringify(location, undefined, 2)}
       </Text>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  paragraph: {
-    fontSize: 18,
-    textAlign: "center",
-  },
-});
