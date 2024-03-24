@@ -1,11 +1,19 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useState, useEffect } from "react";
+import { Platform, Text, View, StyleSheet } from "react-native";
+import { useLocation } from "./hooks/useLocation";
 
 export default function App() {
+  const { location, errorMsg } = useLocation();
+
   return (
     <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
+      {errorMsg ? (
+        <Text style={styles.paragraph}>{errorMsg}</Text>
+      ) : (
+        <Text style={styles.paragraph}>
+          {JSON.stringify(location, undefined, 2)}
+        </Text>
+      )}
     </View>
   );
 }
@@ -13,8 +21,12 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 20,
+  },
+  paragraph: {
+    fontSize: 18,
+    textAlign: "center",
   },
 });
