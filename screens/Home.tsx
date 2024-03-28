@@ -1,5 +1,5 @@
 import { View, Text, Image } from "react-native";
-import React from "react";
+import React, { useEffect } from "react";
 import { ActivityIndicator } from "react-native-paper";
 import { useLocation } from "../hooks/useLocation";
 
@@ -7,6 +7,25 @@ const locationIcon = require("../assets/location.jpg");
 
 export default function Home() {
   const { location, errorMsg } = useLocation();
+  const apiKey = process.env.EXPO_PUBLIC_WEATHER_API_KEY;
+
+  async function getWeatherDetails() {
+    try {
+      let res = await fetch(
+        `https://api.tomorrow.io/v4/weather/forecast?location=${location?.lat},${location?.lng}&apikey=${apiKey}&units=metric`
+      );
+      res = await res.json();
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  useEffect(() => {
+    if (location) {
+      getWeatherDetails();
+    }
+  }, [location]);
 
   if (location === undefined && errorMsg === "") {
     return (
